@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:moviez_streaming/model/box_office_model.dart';
 import 'package:moviez_streaming/sample_data/box_office_data.dart';
@@ -12,13 +14,16 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  List<BoxOfficeModel> allData = movieData;
   TextEditingController editingController = TextEditingController();
+  late List<BoxOfficeModel> allData;
+  String query = '';
 
-  bool isCari = true;
-  String query = "";
-  TextEditingController cari = TextEditingController();
-  List<BoxOfficeModel> dataFilter = [];
+  @override
+  void initState() {
+    super.initState();
+
+    allData = movieData;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +69,7 @@ class _SearchPageState extends State<SearchPage> {
                   Container(
                     child: TextField(
                       onChanged: (value) {
-                        // searcMovie(editingController.text);
+                        buildSearch(editingController.text);
                       },
                       controller: editingController,
                       decoration: InputDecoration(
@@ -110,19 +115,18 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
-  void searcMovie(String query) {
-    final suggestion = allData.where(
+  void buildSearch(String query) {
+    final movies = movieData.where(
       (element) {
         final movieTitle = element.title.toLowerCase();
         final input = query.toLowerCase();
-
         return movieTitle.contains(input);
       },
     ).toList();
 
     setState(() {
-      allData.clear();
-      allData = suggestion;
+      this.query = query;
+      this.allData = movies;
     });
   }
 }
