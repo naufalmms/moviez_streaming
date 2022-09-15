@@ -36,43 +36,75 @@ class _SearchPageState extends State<SearchPage> {
           ),
           backgroundColor: MyColor.buttonColor,
         ),
-        body: Padding(
-          padding: const EdgeInsets.only(
-            top: 29,
-            left: 24,
-            right: 24,
-          ),
-          child: Column(
-            children: [
-              Container(
-                child: TextField(
-                  onChanged: (value) {
-                    // searcMovie(editingController.text);
-                  },
-                  controller: editingController,
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.search),
-                    hintText: "Search Movie",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      borderSide: const BorderSide(color: Colors.white),
+        body: Stack(
+          children: [
+            Row(
+              children: [
+                Expanded(flex: 2, child: Container()),
+                Expanded(
+                  flex: 5,
+                  child: Container(
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      color: MyColor.backgroundColor.withOpacity(0.5),
                     ),
                   ),
                 ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                top: 29,
+                left: 24,
+                right: 24,
               ),
-              const SizedBox(
-                height: 20,
+              child: Column(
+                children: [
+                  Container(
+                    child: TextField(
+                      onChanged: (value) {
+                        // searcMovie(editingController.text);
+                      },
+                      controller: editingController,
+                      decoration: InputDecoration(
+                        fillColor: Colors.white,
+                        filled: true,
+                        labelStyle: const TextStyle(
+                          color: MyColor.titleTextColor,
+                        ),
+                        prefixIcon: const Icon(
+                          Icons.search,
+                          color: MyColor.titleTextColor,
+                        ),
+                        hintText: "Search Movie",
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: Colors.white, width: 2.0),
+                          borderRadius: BorderRadius.circular(25.0),
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide.none,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Expanded(
+                      child: ListView.builder(
+                    itemCount: allData.length,
+                    itemBuilder: (context, index) {
+                      final movie = allData[index];
+                      return DisneyCard(boxOfficeModel: movie);
+                    },
+                  )),
+                ],
               ),
-              Expanded(
-                  child: ListView.builder(
-                itemCount: allData.length,
-                itemBuilder: (context, index) {
-                  final movie = allData[index];
-                  return DisneyCard(boxOfficeModel: movie);
-                },
-              )),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
