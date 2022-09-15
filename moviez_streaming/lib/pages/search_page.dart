@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:moviez_streaming/model/box_office_model.dart';
 import 'package:moviez_streaming/sample_data/box_office_data.dart';
@@ -65,39 +63,65 @@ class _SearchPageState extends State<SearchPage> {
                 right: 24,
               ),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    child: TextField(
-                      onChanged: (value) {
-                        buildSearch(editingController.text);
-                      },
-                      controller: editingController,
-                      decoration: InputDecoration(
-                        fillColor: Colors.white,
-                        filled: true,
-                        labelStyle: const TextStyle(
-                          color: MyColor.titleTextColor,
-                        ),
-                        prefixIcon: const Icon(
-                          Icons.search,
-                          color: MyColor.titleTextColor,
-                        ),
-                        hintText: "Search Movie",
-                        focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Colors.white, width: 2.0),
-                          borderRadius: BorderRadius.circular(25.0),
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: BorderSide.none,
-                        ),
+                  TextField(
+                    onChanged: (value) {
+                      buildSearch(editingController.text);
+                    },
+                    controller: editingController,
+                    decoration: InputDecoration(
+                      fillColor: Colors.white,
+                      filled: true,
+                      labelStyle: const TextStyle(
+                        color: MyColor.titleTextColor,
+                      ),
+                      prefixIcon: const Icon(
+                        Icons.search,
+                        color: MyColor.titleTextColor,
+                      ),
+                      hintText: "Search Movie",
+                      focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            const BorderSide(color: Colors.white, width: 2.0),
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: BorderSide.none,
                       ),
                     ),
                   ),
                   const SizedBox(
                     height: 20,
                   ),
+                  Container(
+                      child: allData.isNotEmpty &&
+                              editingController.text.isNotEmpty
+                          ? Container(
+                              margin: const EdgeInsets.only(bottom: 23),
+                              child: Text(
+                                "Search Result (${allData.length})",
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: MyColor.titleTextColor,
+                                ),
+                              ),
+                            )
+                          : editingController.text.isNotEmpty
+                              ? Container(
+                                  margin: const EdgeInsets.only(bottom: 23),
+                                  child: const Text(
+                                    "Search Result (0)",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                      color: MyColor.titleTextColor,
+                                    ),
+                                  ),
+                                )
+                              : null),
                   Expanded(
                       child: ListView.builder(
                     itemCount: allData.length,
@@ -126,7 +150,7 @@ class _SearchPageState extends State<SearchPage> {
 
     setState(() {
       this.query = query;
-      this.allData = movies;
+      allData = movies;
     });
   }
 }
