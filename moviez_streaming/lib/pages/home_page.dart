@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:moviez_streaming/pages/search_page.dart';
 import 'package:moviez_streaming/utils/colors.dart';
@@ -17,7 +19,7 @@ class HomePage extends StatelessWidget {
         padding: const EdgeInsets.only(
           top: 29,
           left: 24,
-          right: 24,
+          // right: 24,
         ),
         child: SingleChildScrollView(
           child: Column(
@@ -53,19 +55,32 @@ class HomePage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    IconButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => SearchPage(),
-                            ));
-                      },
-                      icon: const Icon(
-                        Icons.search,
-                        size: 22,
-                      ),
-                    ),
+                    Container(
+                        width: 55,
+                        height: 45,
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            bottomLeft: Radius.circular(20),
+                          ),
+                        ),
+                        child: Center(
+                          child: IconButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SearchPage(),
+                                ),
+                              );
+                            },
+                            icon: const Icon(
+                              Icons.search,
+                              size: 22,
+                            ),
+                          ),
+                        )),
                   ],
                 ),
               ),
